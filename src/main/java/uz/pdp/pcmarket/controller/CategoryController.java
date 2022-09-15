@@ -1,6 +1,8 @@
 package uz.pdp.pcmarket.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.pcmarket.payload.CategoryDTO;
 
@@ -8,6 +10,7 @@ import uz.pdp.pcmarket.payload.CategoryDTO;
 public interface CategoryController {
 
     @PostMapping
+    @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN')")
     ResponseEntity<?> add(@RequestBody CategoryDTO categoryDTO);
 
     @GetMapping
@@ -15,10 +18,12 @@ public interface CategoryController {
 
 
     @PutMapping("/{id}")
+    @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN')")
     ResponseEntity<?> edit(@PathVariable Integer id,
                    @RequestBody CategoryDTO categoryDTO);
 
     @DeleteMapping("/{id}")
+    @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN')")
     ResponseEntity<?> delete(@PathVariable Integer id);
 
 
